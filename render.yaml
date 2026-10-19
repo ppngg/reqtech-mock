@@ -1,0 +1,18 @@
+# Render Blueprint for the ReqTech mock. In Render: New → Blueprint → point at the repo,
+# set "Root Directory" to local_dev/mocks (so this file and the Dockerfile are found).
+# Render injects PORT automatically; the app binds 0.0.0.0:$PORT.
+services:
+  - type: web
+    name: reqtech-mock
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    plan: free            # free web services sleep when idle — fine for testing
+    healthCheckPath: /health
+    envVars:
+      - key: CONFIRM_DELAY
+        value: "2"
+      - key: MOCK_TOKEN          # protect the public endpoint; send as X-Mock-Token
+        generateValue: true
+      - key: CONFIRM_CALLBACK    # set to your Dev-B confirmation iFlow URL (leave blank to write files)
+        sync: false

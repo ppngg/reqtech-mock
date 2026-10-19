@@ -1,0 +1,2 @@
+# No third-party dependencies — Python standard library only.
+# Present so buildpack-based platforms (Railway/Heroku/Cloud Run buildpacks) detect a Python app.
